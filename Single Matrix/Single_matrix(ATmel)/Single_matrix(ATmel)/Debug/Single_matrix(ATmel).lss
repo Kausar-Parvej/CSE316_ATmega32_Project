@@ -1,0 +1,858 @@
+
+Single_matrix(ATmel).elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         0000040e  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000020  00800060  0000040e  00000482  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  000004a2  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000004d4  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000038  00000000  00000000  00000510  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   000007f5  00000000  00000000  00000548  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 0000066b  00000000  00000000  00000d3d  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   000004d8  00000000  00000000  000013a8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000064  00000000  00000000  00001880  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    000003e4  00000000  00000000  000018e4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    00000479  00000000  00000000  00001cc8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000098  00000000  00000000  00002141  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+   8:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+   c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  10:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  14:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  18:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  1c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  20:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  24:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  28:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  2c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  30:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  34:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  38:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  3c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  40:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  44:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  48:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  4c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  50:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+
+00000060 <__do_copy_data>:
+  60:	10 e0       	ldi	r17, 0x00	; 0
+  62:	a0 e6       	ldi	r26, 0x60	; 96
+  64:	b0 e0       	ldi	r27, 0x00	; 0
+  66:	ee e0       	ldi	r30, 0x0E	; 14
+  68:	f4 e0       	ldi	r31, 0x04	; 4
+  6a:	02 c0       	rjmp	.+4      	; 0x70 <__do_copy_data+0x10>
+  6c:	05 90       	lpm	r0, Z+
+  6e:	0d 92       	st	X+, r0
+  70:	a0 38       	cpi	r26, 0x80	; 128
+  72:	b1 07       	cpc	r27, r17
+  74:	d9 f7       	brne	.-10     	; 0x6c <__do_copy_data+0xc>
+  76:	0e 94 68 00 	call	0xd0	; 0xd0 <main>
+  7a:	0c 94 05 02 	jmp	0x40a	; 0x40a <_exit>
+
+0000007e <__bad_interrupt>:
+  7e:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000082 <init_pins>:
+}
+
+// Function to read button inputs
+unsigned int read_buttons() {
+	return (PINA & ((1 << LEFT_BUTTON_PIN) | (1 << RIGHT_BUTTON_PIN)));
+}
+  82:	8f ef       	ldi	r24, 0xFF	; 255
+  84:	81 bb       	out	0x11, r24	; 17
+  86:	87 bb       	out	0x17, r24	; 23
+  88:	8a b3       	in	r24, 0x1a	; 26
+  8a:	8c 7f       	andi	r24, 0xFC	; 252
+  8c:	8a bb       	out	0x1a, r24	; 26
+  8e:	8b b3       	in	r24, 0x1b	; 27
+  90:	83 60       	ori	r24, 0x03	; 3
+  92:	8b bb       	out	0x1b, r24	; 27
+  94:	08 95       	ret
+
+00000096 <update_display>:
+
+// Function to update LED matrix display
+void update_display(unsigned int *display) {
+  96:	fc 01       	movw	r30, r24
+	for (int row = 0; row < 8; row++) {
+  98:	20 e0       	ldi	r18, 0x00	; 0
+  9a:	30 e0       	ldi	r19, 0x00	; 0
+		// Set row pin low
+		ROW_PORT = ~(1 << row);
+  9c:	61 e0       	ldi	r22, 0x01	; 1
+  9e:	70 e0       	ldi	r23, 0x00	; 0
+  a0:	ab 01       	movw	r20, r22
+  a2:	02 2e       	mov	r0, r18
+  a4:	02 c0       	rjmp	.+4      	; 0xaa <update_display+0x14>
+  a6:	44 0f       	add	r20, r20
+  a8:	55 1f       	adc	r21, r21
+  aa:	0a 94       	dec	r0
+  ac:	e2 f7       	brpl	.-8      	; 0xa6 <update_display+0x10>
+  ae:	40 95       	com	r20
+  b0:	42 bb       	out	0x12, r20	; 18
+		// Set column pins based on display data
+		COL_PORT = display[row];
+  b2:	80 81       	ld	r24, Z
+  b4:	32 96       	adiw	r30, 0x02	; 2
+  b6:	88 bb       	out	0x18, r24	; 24
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  b8:	89 ef       	ldi	r24, 0xF9	; 249
+  ba:	90 e0       	ldi	r25, 0x00	; 0
+  bc:	01 97       	sbiw	r24, 0x01	; 1
+  be:	f1 f7       	brne	.-4      	; 0xbc <update_display+0x26>
+  c0:	00 c0       	rjmp	.+0      	; 0xc2 <update_display+0x2c>
+  c2:	00 00       	nop
+	return (PINA & ((1 << LEFT_BUTTON_PIN) | (1 << RIGHT_BUTTON_PIN)));
+}
+
+// Function to update LED matrix display
+void update_display(unsigned int *display) {
+	for (int row = 0; row < 8; row++) {
+  c4:	2f 5f       	subi	r18, 0xFF	; 255
+  c6:	3f 4f       	sbci	r19, 0xFF	; 255
+  c8:	28 30       	cpi	r18, 0x08	; 8
+  ca:	31 05       	cpc	r19, r1
+  cc:	49 f7       	brne	.-46     	; 0xa0 <update_display+0xa>
+		// Set column pins based on display data
+		COL_PORT = display[row];
+		// Delay to control display refresh rate
+		_delay_ms(1);
+	}
+}
+  ce:	08 95       	ret
+
+000000d0 <main>:
+
+int main() {
+  d0:	cf 93       	push	r28
+  d2:	df 93       	push	r29
+  d4:	cd b7       	in	r28, 0x3d	; 61
+  d6:	de b7       	in	r29, 0x3e	; 62
+  d8:	e2 97       	sbiw	r28, 0x32	; 50
+  da:	0f b6       	in	r0, 0x3f	; 63
+  dc:	f8 94       	cli
+  de:	de bf       	out	0x3e, r29	; 62
+  e0:	0f be       	out	0x3f, r0	; 63
+  e2:	cd bf       	out	0x3d, r28	; 61
+	init_pins();
+  e4:	0e 94 41 00 	call	0x82	; 0x82 <init_pins>
+
+	// Initialize display buffer
+	unsigned int display[8] = {0};
+  e8:	fe 01       	movw	r30, r28
+  ea:	31 96       	adiw	r30, 0x01	; 1
+  ec:	80 e1       	ldi	r24, 0x10	; 16
+  ee:	df 01       	movw	r26, r30
+  f0:	1d 92       	st	X+, r1
+  f2:	8a 95       	dec	r24
+  f4:	e9 f7       	brne	.-6      	; 0xf0 <main+0x20>
+	
+	int ball_counter = 0; // for slowing down the ball movement :)
+	int paddle_count = 0; // slowing down paddle movement
+	int arr_index;
+	
+	int show_bricks[16] = {1,1,1,1,1,1,1,1,
+  f6:	80 e2       	ldi	r24, 0x20	; 32
+  f8:	e0 e6       	ldi	r30, 0x60	; 96
+  fa:	f0 e0       	ldi	r31, 0x00	; 0
+  fc:	de 01       	movw	r26, r28
+  fe:	51 96       	adiw	r26, 0x11	; 17
+ 100:	01 90       	ld	r0, Z+
+ 102:	0d 92       	st	X+, r0
+ 104:	8a 95       	dec	r24
+ 106:	e1 f7       	brne	.-8      	; 0x100 <main+0x30>
+	PORTA |= (1 << LEFT_BUTTON_PIN) | (1 << RIGHT_BUTTON_PIN);
+}
+
+// Function to read button inputs
+unsigned int read_buttons() {
+	return (PINA & ((1 << LEFT_BUTTON_PIN) | (1 << RIGHT_BUTTON_PIN)));
+ 108:	89 b3       	in	r24, 0x19	; 25
+	int ball_dir_col = 1;
+
+	int paddle_pos = 2;
+	ball_col = paddle_pos+1;
+	
+	int ball_counter = 0; // for slowing down the ball movement :)
+ 10a:	81 2c       	mov	r8, r1
+ 10c:	91 2c       	mov	r9, r1
+
+	// Ball position and direction
+	int ball_row = 7;
+	int ball_col = 0;
+	int ball_dir_row = -1;
+	int ball_dir_col = 1;
+ 10e:	21 e0       	ldi	r18, 0x01	; 1
+ 110:	30 e0       	ldi	r19, 0x00	; 0
+ 112:	3a ab       	std	Y+50, r19	; 0x32
+ 114:	29 ab       	std	Y+49, r18	; 0x31
+	unsigned int display[8] = {0};
+
+	// Ball position and direction
+	int ball_row = 7;
+	int ball_col = 0;
+	int ball_dir_row = -1;
+ 116:	44 24       	eor	r4, r4
+ 118:	4a 94       	dec	r4
+ 11a:	54 2c       	mov	r5, r4
+	int ball_dir_col = 1;
+
+	int paddle_pos = 2;
+	ball_col = paddle_pos+1;
+ 11c:	0f 2e       	mov	r0, r31
+ 11e:	f3 e0       	ldi	r31, 0x03	; 3
+ 120:	cf 2e       	mov	r12, r31
+ 122:	d1 2c       	mov	r13, r1
+ 124:	f0 2d       	mov	r31, r0
+
+	// Initialize display buffer
+	unsigned int display[8] = {0};
+
+	// Ball position and direction
+	int ball_row = 7;
+ 126:	0f 2e       	mov	r0, r31
+ 128:	f7 e0       	ldi	r31, 0x07	; 7
+ 12a:	ef 2e       	mov	r14, r31
+ 12c:	f1 2c       	mov	r15, r1
+ 12e:	f0 2d       	mov	r31, r0
+	while (1) {
+		// Read button inputs
+		unsigned int buttons = read_buttons();
+		
+		//paddle movement
+		paddle_count ++;
+ 130:	aa 24       	eor	r10, r10
+ 132:	a3 94       	inc	r10
+ 134:	b1 2c       	mov	r11, r1
+	int ball_row = 7;
+	int ball_col = 0;
+	int ball_dir_row = -1;
+	int ball_dir_col = 1;
+
+	int paddle_pos = 2;
+ 136:	68 94       	set
+ 138:	66 24       	eor	r6, r6
+ 13a:	61 f8       	bld	r6, 1
+ 13c:	71 2c       	mov	r7, r1
+		// Update display buffer
+		int led_row = 0;
+		for(int i=0; i<2; i++){  // Show Bricks
+			for(int j=0; j<8; j++){
+				if(show_bricks[i*8 + j]){
+					led_row |= (1<<j);
+ 13e:	01 e0       	ldi	r16, 0x01	; 1
+ 140:	10 e0       	ldi	r17, 0x00	; 0
+
+		for (int i = 2; i <= 6; i++) {
+			display[i] = 0; // Clear the middle rows
+		}
+
+		display[7] = (0b00011111 << paddle_pos); // Paddle (LSB is the left the of paddle)
+ 142:	0f 2e       	mov	r0, r31
+ 144:	ff e1       	ldi	r31, 0x1F	; 31
+ 146:	2f 2e       	mov	r2, r31
+ 148:	31 2c       	mov	r3, r1
+ 14a:	f0 2d       	mov	r31, r0
+ 14c:	19 c0       	rjmp	.+50     	; 0x180 <main+0xb0>
+		unsigned int buttons = read_buttons();
+		
+		//paddle movement
+		paddle_count ++;
+		if(paddle_count >= 15){
+			if (!(buttons & (1 << LEFT_BUTTON_PIN))) {
+ 14e:	80 fd       	sbrc	r24, 0
+ 150:	06 c0       	rjmp	.+12     	; 0x15e <main+0x8e>
+				if (paddle_pos > 0) {
+ 152:	16 14       	cp	r1, r6
+ 154:	17 04       	cpc	r1, r7
+ 156:	1c f4       	brge	.+6      	; 0x15e <main+0x8e>
+					paddle_pos--;
+ 158:	31 e0       	ldi	r19, 0x01	; 1
+ 15a:	63 1a       	sub	r6, r19
+ 15c:	71 08       	sbc	r7, r1
+				}
+			}
+
+			if (!(buttons & (1 << RIGHT_BUTTON_PIN))) {
+ 15e:	81 fd       	sbrc	r24, 1
+ 160:	0a c0       	rjmp	.+20     	; 0x176 <main+0xa6>
+				if (paddle_pos < 3) {
+ 162:	83 e0       	ldi	r24, 0x03	; 3
+ 164:	68 16       	cp	r6, r24
+ 166:	71 04       	cpc	r7, r1
+ 168:	4c f4       	brge	.+18     	; 0x17c <main+0xac>
+					paddle_pos++;
+ 16a:	9f ef       	ldi	r25, 0xFF	; 255
+ 16c:	69 1a       	sub	r6, r25
+ 16e:	79 0a       	sbc	r7, r25
+				}
+			}
+			paddle_count = 0;
+ 170:	a1 2c       	mov	r10, r1
+ 172:	b1 2c       	mov	r11, r1
+ 174:	05 c0       	rjmp	.+10     	; 0x180 <main+0xb0>
+ 176:	a1 2c       	mov	r10, r1
+ 178:	b1 2c       	mov	r11, r1
+ 17a:	02 c0       	rjmp	.+4      	; 0x180 <main+0xb0>
+ 17c:	a1 2c       	mov	r10, r1
+ 17e:	b1 2c       	mov	r11, r1
+		}
+
+		// Update ball position
+		ball_counter ++;
+ 180:	af ef       	ldi	r26, 0xFF	; 255
+ 182:	8a 1a       	sub	r8, r26
+ 184:	9a 0a       	sbc	r9, r26
+		if(ball_counter >= 15){
+ 186:	bf e0       	ldi	r27, 0x0F	; 15
+ 188:	8b 16       	cp	r8, r27
+ 18a:	91 04       	cpc	r9, r1
+ 18c:	0c f4       	brge	.+2      	; 0x190 <main+0xc0>
+ 18e:	c2 c0       	rjmp	.+388    	; 0x314 <main+0x244>
+			ball_row += ball_dir_row;
+ 190:	e4 0c       	add	r14, r4
+ 192:	f5 1c       	adc	r15, r5
+			ball_col += ball_dir_col;
+ 194:	29 a9       	ldd	r18, Y+49	; 0x31
+ 196:	3a a9       	ldd	r19, Y+50	; 0x32
+ 198:	c2 0e       	add	r12, r18
+ 19a:	d3 1e       	adc	r13, r19
+			
+			/*if ((ball_row == 6 || ball_row == 7) && ball_col >= paddle_pos && ball_col < paddle_pos + 4) {
+				ball_dir_row = -1; // Reflect ball upwards
+			}*/
+			
+			if (ball_row == 6 || ball_row == 7) {   // for more refine collision
+ 19c:	c7 01       	movw	r24, r14
+ 19e:	06 97       	sbiw	r24, 0x06	; 6
+ 1a0:	02 97       	sbiw	r24, 0x02	; 2
+ 1a2:	c8 f5       	brcc	.+114    	; 0x216 <main+0x146>
+				if(ball_col == paddle_pos || ball_col == paddle_pos+1){
+ 1a4:	6c 14       	cp	r6, r12
+ 1a6:	7d 04       	cpc	r7, r13
+ 1a8:	c9 f0       	breq	.+50     	; 0x1dc <main+0x10c>
+ 1aa:	c3 01       	movw	r24, r6
+ 1ac:	01 96       	adiw	r24, 0x01	; 1
+ 1ae:	c8 16       	cp	r12, r24
+ 1b0:	d9 06       	cpc	r13, r25
+ 1b2:	e1 f0       	breq	.+56     	; 0x1ec <main+0x11c>
+					ball_dir_row = -1;
+					ball_dir_col = -1;
+				}
+				else if( ball_col == paddle_pos+2){
+ 1b4:	01 96       	adiw	r24, 0x01	; 1
+ 1b6:	c8 16       	cp	r12, r24
+ 1b8:	d9 06       	cpc	r13, r25
+ 1ba:	01 f1       	breq	.+64     	; 0x1fc <main+0x12c>
+					ball_dir_row = -1;
+					ball_dir_col = 0;
+				}
+				else if(ball_col == paddle_pos + 3 || ball_col == paddle_pos+4){
+ 1bc:	01 96       	adiw	r24, 0x01	; 1
+ 1be:	c8 16       	cp	r12, r24
+ 1c0:	d9 06       	cpc	r13, r25
+ 1c2:	11 f1       	breq	.+68     	; 0x208 <main+0x138>
+ 1c4:	01 96       	adiw	r24, 0x01	; 1
+ 1c6:	c8 16       	cp	r12, r24
+ 1c8:	d9 06       	cpc	r13, r25
+ 1ca:	29 f5       	brne	.+74     	; 0x216 <main+0x146>
+					ball_dir_row = -1;
+					ball_dir_col = 1;
+ 1cc:	81 e0       	ldi	r24, 0x01	; 1
+ 1ce:	90 e0       	ldi	r25, 0x00	; 0
+ 1d0:	9a ab       	std	Y+50, r25	; 0x32
+ 1d2:	89 ab       	std	Y+49, r24	; 0x31
+				else if( ball_col == paddle_pos+2){
+					ball_dir_row = -1;
+					ball_dir_col = 0;
+				}
+				else if(ball_col == paddle_pos + 3 || ball_col == paddle_pos+4){
+					ball_dir_row = -1;
+ 1d4:	44 24       	eor	r4, r4
+ 1d6:	4a 94       	dec	r4
+ 1d8:	54 2c       	mov	r5, r4
+ 1da:	1d c0       	rjmp	.+58     	; 0x216 <main+0x146>
+			}*/
+			
+			if (ball_row == 6 || ball_row == 7) {   // for more refine collision
+				if(ball_col == paddle_pos || ball_col == paddle_pos+1){
+					ball_dir_row = -1;
+					ball_dir_col = -1;
+ 1dc:	af ef       	ldi	r26, 0xFF	; 255
+ 1de:	bf ef       	ldi	r27, 0xFF	; 255
+ 1e0:	ba ab       	std	Y+50, r27	; 0x32
+ 1e2:	a9 ab       	std	Y+49, r26	; 0x31
+				ball_dir_row = -1; // Reflect ball upwards
+			}*/
+			
+			if (ball_row == 6 || ball_row == 7) {   // for more refine collision
+				if(ball_col == paddle_pos || ball_col == paddle_pos+1){
+					ball_dir_row = -1;
+ 1e4:	44 24       	eor	r4, r4
+ 1e6:	4a 94       	dec	r4
+ 1e8:	54 2c       	mov	r5, r4
+ 1ea:	15 c0       	rjmp	.+42     	; 0x216 <main+0x146>
+					ball_dir_col = -1;
+ 1ec:	2f ef       	ldi	r18, 0xFF	; 255
+ 1ee:	3f ef       	ldi	r19, 0xFF	; 255
+ 1f0:	3a ab       	std	Y+50, r19	; 0x32
+ 1f2:	29 ab       	std	Y+49, r18	; 0x31
+				ball_dir_row = -1; // Reflect ball upwards
+			}*/
+			
+			if (ball_row == 6 || ball_row == 7) {   // for more refine collision
+				if(ball_col == paddle_pos || ball_col == paddle_pos+1){
+					ball_dir_row = -1;
+ 1f4:	44 24       	eor	r4, r4
+ 1f6:	4a 94       	dec	r4
+ 1f8:	54 2c       	mov	r5, r4
+ 1fa:	0d c0       	rjmp	.+26     	; 0x216 <main+0x146>
+					ball_dir_col = -1;
+				}
+				else if( ball_col == paddle_pos+2){
+					ball_dir_row = -1;
+					ball_dir_col = 0;
+ 1fc:	1a aa       	std	Y+50, r1	; 0x32
+ 1fe:	19 aa       	std	Y+49, r1	; 0x31
+				if(ball_col == paddle_pos || ball_col == paddle_pos+1){
+					ball_dir_row = -1;
+					ball_dir_col = -1;
+				}
+				else if( ball_col == paddle_pos+2){
+					ball_dir_row = -1;
+ 200:	44 24       	eor	r4, r4
+ 202:	4a 94       	dec	r4
+ 204:	54 2c       	mov	r5, r4
+ 206:	07 c0       	rjmp	.+14     	; 0x216 <main+0x146>
+					ball_dir_col = 0;
+				}
+				else if(ball_col == paddle_pos + 3 || ball_col == paddle_pos+4){
+					ball_dir_row = -1;
+					ball_dir_col = 1;
+ 208:	81 e0       	ldi	r24, 0x01	; 1
+ 20a:	90 e0       	ldi	r25, 0x00	; 0
+ 20c:	9a ab       	std	Y+50, r25	; 0x32
+ 20e:	89 ab       	std	Y+49, r24	; 0x31
+				else if( ball_col == paddle_pos+2){
+					ball_dir_row = -1;
+					ball_dir_col = 0;
+				}
+				else if(ball_col == paddle_pos + 3 || ball_col == paddle_pos+4){
+					ball_dir_row = -1;
+ 210:	44 24       	eor	r4, r4
+ 212:	4a 94       	dec	r4
+ 214:	54 2c       	mov	r5, r4
+					ball_dir_col = 1;
+				}
+			}
+			
+			// Check for collision with bricks
+			if(ball_col != 0 && ball_col != 7){
+ 216:	c1 14       	cp	r12, r1
+ 218:	d1 04       	cpc	r13, r1
+ 21a:	49 f0       	breq	.+18     	; 0x22e <main+0x15e>
+ 21c:	97 e0       	ldi	r25, 0x07	; 7
+ 21e:	c9 16       	cp	r12, r25
+ 220:	d1 04       	cpc	r13, r1
+ 222:	39 f0       	breq	.+14     	; 0x232 <main+0x162>
+				arr_index = ball_col + ball_dir_col;  // adding ball_dir_col for diagonal collision
+ 224:	89 a9       	ldd	r24, Y+49	; 0x31
+ 226:	9a a9       	ldd	r25, Y+50	; 0x32
+ 228:	8c 0d       	add	r24, r12
+ 22a:	9d 1d       	adc	r25, r13
+ 22c:	03 c0       	rjmp	.+6      	; 0x234 <main+0x164>
+			}
+			else arr_index = ball_col;
+ 22e:	c6 01       	movw	r24, r12
+ 230:	01 c0       	rjmp	.+2      	; 0x234 <main+0x164>
+ 232:	c6 01       	movw	r24, r12
+			
+			if(ball_row == 2 && ball_dir_row != 1){  // for now avoiding collision when coming down
+ 234:	a2 e0       	ldi	r26, 0x02	; 2
+ 236:	ea 16       	cp	r14, r26
+ 238:	f1 04       	cpc	r15, r1
+ 23a:	09 f5       	brne	.+66     	; 0x27e <main+0x1ae>
+ 23c:	b1 e0       	ldi	r27, 0x01	; 1
+ 23e:	4b 16       	cp	r4, r27
+ 240:	51 04       	cpc	r5, r1
+ 242:	09 f4       	brne	.+2      	; 0x246 <main+0x176>
+ 244:	47 c0       	rjmp	.+142    	; 0x2d4 <main+0x204>
+				if(show_bricks[arr_index + 8]){
+ 246:	08 96       	adiw	r24, 0x08	; 8
+ 248:	fc 01       	movw	r30, r24
+ 24a:	ee 0f       	add	r30, r30
+ 24c:	ff 1f       	adc	r31, r31
+ 24e:	21 e0       	ldi	r18, 0x01	; 1
+ 250:	30 e0       	ldi	r19, 0x00	; 0
+ 252:	2c 0f       	add	r18, r28
+ 254:	3d 1f       	adc	r19, r29
+ 256:	e2 0f       	add	r30, r18
+ 258:	f3 1f       	adc	r31, r19
+ 25a:	20 89       	ldd	r18, Z+16	; 0x10
+ 25c:	31 89       	ldd	r19, Z+17	; 0x11
+ 25e:	23 2b       	or	r18, r19
+ 260:	c9 f1       	breq	.+114    	; 0x2d4 <main+0x204>
+					show_bricks[arr_index + 8] = 0;  
+ 262:	88 0f       	add	r24, r24
+ 264:	99 1f       	adc	r25, r25
+ 266:	e1 e0       	ldi	r30, 0x01	; 1
+ 268:	f0 e0       	ldi	r31, 0x00	; 0
+ 26a:	ec 0f       	add	r30, r28
+ 26c:	fd 1f       	adc	r31, r29
+ 26e:	e8 0f       	add	r30, r24
+ 270:	f9 1f       	adc	r31, r25
+ 272:	11 8a       	std	Z+17, r1	; 0x11
+ 274:	10 8a       	std	Z+16, r1	; 0x10
+					ball_dir_row = -ball_dir_row;
+ 276:	51 94       	neg	r5
+ 278:	41 94       	neg	r4
+ 27a:	51 08       	sbc	r5, r1
+ 27c:	2b c0       	rjmp	.+86     	; 0x2d4 <main+0x204>
+				}
+			}
+			if(ball_row == 1 && ball_dir_row != 1){
+ 27e:	31 e0       	ldi	r19, 0x01	; 1
+ 280:	e3 16       	cp	r14, r19
+ 282:	f1 04       	cpc	r15, r1
+ 284:	09 f5       	brne	.+66     	; 0x2c8 <main+0x1f8>
+ 286:	a1 e0       	ldi	r26, 0x01	; 1
+ 288:	4a 16       	cp	r4, r26
+ 28a:	51 04       	cpc	r5, r1
+ 28c:	09 f4       	brne	.+2      	; 0x290 <main+0x1c0>
+ 28e:	b5 c0       	rjmp	.+362    	; 0x3fa <main+0x32a>
+				if(show_bricks[arr_index]){
+ 290:	fc 01       	movw	r30, r24
+ 292:	ee 0f       	add	r30, r30
+ 294:	ff 1f       	adc	r31, r31
+ 296:	21 e0       	ldi	r18, 0x01	; 1
+ 298:	30 e0       	ldi	r19, 0x00	; 0
+ 29a:	2c 0f       	add	r18, r28
+ 29c:	3d 1f       	adc	r19, r29
+ 29e:	e2 0f       	add	r30, r18
+ 2a0:	f3 1f       	adc	r31, r19
+ 2a2:	20 89       	ldd	r18, Z+16	; 0x10
+ 2a4:	31 89       	ldd	r19, Z+17	; 0x11
+ 2a6:	23 2b       	or	r18, r19
+ 2a8:	09 f4       	brne	.+2      	; 0x2ac <main+0x1dc>
+ 2aa:	a7 c0       	rjmp	.+334    	; 0x3fa <main+0x32a>
+					show_bricks[arr_index] = 0;
+ 2ac:	88 0f       	add	r24, r24
+ 2ae:	99 1f       	adc	r25, r25
+ 2b0:	e1 e0       	ldi	r30, 0x01	; 1
+ 2b2:	f0 e0       	ldi	r31, 0x00	; 0
+ 2b4:	ec 0f       	add	r30, r28
+ 2b6:	fd 1f       	adc	r31, r29
+ 2b8:	e8 0f       	add	r30, r24
+ 2ba:	f9 1f       	adc	r31, r25
+ 2bc:	11 8a       	std	Z+17, r1	; 0x11
+ 2be:	10 8a       	std	Z+16, r1	; 0x10
+					ball_dir_row = -ball_dir_row;
+ 2c0:	51 94       	neg	r5
+ 2c2:	41 94       	neg	r4
+ 2c4:	51 08       	sbc	r5, r1
+ 2c6:	99 c0       	rjmp	.+306    	; 0x3fa <main+0x32a>
+				}				
+			}
+			
+			// Check for collision with walls
+			if (ball_row <= 0 ) {
+ 2c8:	1e 14       	cp	r1, r14
+ 2ca:	1f 04       	cpc	r1, r15
+ 2cc:	1c f0       	brlt	.+6      	; 0x2d4 <main+0x204>
+				ball_dir_row = -ball_dir_row; // Reflect ball downwards
+ 2ce:	51 94       	neg	r5
+ 2d0:	41 94       	neg	r4
+ 2d2:	51 08       	sbc	r5, r1
+			}
+			if (ball_col <= 0 || ball_col >= 7) {
+ 2d4:	c6 01       	movw	r24, r12
+ 2d6:	01 97       	sbiw	r24, 0x01	; 1
+ 2d8:	06 97       	sbiw	r24, 0x06	; 6
+ 2da:	38 f0       	brcs	.+14     	; 0x2ea <main+0x21a>
+				ball_dir_col = -ball_dir_col; // Reflect ball horizontally
+ 2dc:	89 a9       	ldd	r24, Y+49	; 0x31
+ 2de:	9a a9       	ldd	r25, Y+50	; 0x32
+ 2e0:	91 95       	neg	r25
+ 2e2:	81 95       	neg	r24
+ 2e4:	91 09       	sbc	r25, r1
+ 2e6:	9a ab       	std	Y+50, r25	; 0x32
+ 2e8:	89 ab       	std	Y+49, r24	; 0x31
+			}
+			
+			if(ball_row >= 15){ //  reviving the ball (for testing only!)
+ 2ea:	9f e0       	ldi	r25, 0x0F	; 15
+ 2ec:	e9 16       	cp	r14, r25
+ 2ee:	f1 04       	cpc	r15, r1
+ 2f0:	7c f0       	brlt	.+30     	; 0x310 <main+0x240>
+				ball_dir_row = -ball_dir_row;
+ 2f2:	51 94       	neg	r5
+ 2f4:	41 94       	neg	r4
+ 2f6:	51 08       	sbc	r5, r1
+				ball_row = 6;
+				ball_col = paddle_pos+2;
+ 2f8:	63 01       	movw	r12, r6
+ 2fa:	a2 e0       	ldi	r26, 0x02	; 2
+ 2fc:	ca 0e       	add	r12, r26
+ 2fe:	d1 1c       	adc	r13, r1
+			}
+			
+			
+			ball_counter = 0;
+ 300:	81 2c       	mov	r8, r1
+ 302:	91 2c       	mov	r9, r1
+				ball_dir_col = -ball_dir_col; // Reflect ball horizontally
+			}
+			
+			if(ball_row >= 15){ //  reviving the ball (for testing only!)
+				ball_dir_row = -ball_dir_row;
+				ball_row = 6;
+ 304:	0f 2e       	mov	r0, r31
+ 306:	f6 e0       	ldi	r31, 0x06	; 6
+ 308:	ef 2e       	mov	r14, r31
+ 30a:	f1 2c       	mov	r15, r1
+ 30c:	f0 2d       	mov	r31, r0
+ 30e:	02 c0       	rjmp	.+4      	; 0x314 <main+0x244>
+				ball_col = paddle_pos+2;
+			}
+			
+			
+			ball_counter = 0;
+ 310:	81 2c       	mov	r8, r1
+ 312:	91 2c       	mov	r9, r1
+ 314:	fe 01       	movw	r30, r28
+ 316:	71 96       	adiw	r30, 0x11	; 17
+ 318:	80 e0       	ldi	r24, 0x00	; 0
+ 31a:	90 e0       	ldi	r25, 0x00	; 0
+ 31c:	40 e0       	ldi	r20, 0x00	; 0
+ 31e:	50 e0       	ldi	r21, 0x00	; 0
+
+		// Update display buffer
+		int led_row = 0;
+		for(int i=0; i<2; i++){  // Show Bricks
+			for(int j=0; j<8; j++){
+				if(show_bricks[i*8 + j]){
+ 320:	21 91       	ld	r18, Z+
+ 322:	31 91       	ld	r19, Z+
+ 324:	23 2b       	or	r18, r19
+ 326:	49 f0       	breq	.+18     	; 0x33a <main+0x26a>
+					led_row |= (1<<j);
+ 328:	98 01       	movw	r18, r16
+ 32a:	08 2e       	mov	r0, r24
+ 32c:	02 c0       	rjmp	.+4      	; 0x332 <main+0x262>
+ 32e:	22 0f       	add	r18, r18
+ 330:	33 1f       	adc	r19, r19
+ 332:	0a 94       	dec	r0
+ 334:	e2 f7       	brpl	.-8      	; 0x32e <main+0x25e>
+ 336:	42 2b       	or	r20, r18
+ 338:	53 2b       	or	r21, r19
+
+
+		// Update display buffer
+		int led_row = 0;
+		for(int i=0; i<2; i++){  // Show Bricks
+			for(int j=0; j<8; j++){
+ 33a:	01 96       	adiw	r24, 0x01	; 1
+ 33c:	88 30       	cpi	r24, 0x08	; 8
+ 33e:	91 05       	cpc	r25, r1
+ 340:	79 f7       	brne	.-34     	; 0x320 <main+0x250>
+				if(show_bricks[i*8 + j]){
+					led_row |= (1<<j);
+				}
+			}
+			display[i] = led_row;
+ 342:	5a 83       	std	Y+2, r21	; 0x02
+ 344:	49 83       	std	Y+1, r20	; 0x01
+ 346:	fe 01       	movw	r30, r28
+ 348:	b1 96       	adiw	r30, 0x21	; 33
+ 34a:	80 e0       	ldi	r24, 0x00	; 0
+ 34c:	90 e0       	ldi	r25, 0x00	; 0
+ 34e:	40 e0       	ldi	r20, 0x00	; 0
+ 350:	50 e0       	ldi	r21, 0x00	; 0
+
+		// Update display buffer
+		int led_row = 0;
+		for(int i=0; i<2; i++){  // Show Bricks
+			for(int j=0; j<8; j++){
+				if(show_bricks[i*8 + j]){
+ 352:	21 91       	ld	r18, Z+
+ 354:	31 91       	ld	r19, Z+
+ 356:	23 2b       	or	r18, r19
+ 358:	49 f0       	breq	.+18     	; 0x36c <main+0x29c>
+					led_row |= (1<<j);
+ 35a:	98 01       	movw	r18, r16
+ 35c:	08 2e       	mov	r0, r24
+ 35e:	02 c0       	rjmp	.+4      	; 0x364 <main+0x294>
+ 360:	22 0f       	add	r18, r18
+ 362:	33 1f       	adc	r19, r19
+ 364:	0a 94       	dec	r0
+ 366:	e2 f7       	brpl	.-8      	; 0x360 <main+0x290>
+ 368:	42 2b       	or	r20, r18
+ 36a:	53 2b       	or	r21, r19
+
+
+		// Update display buffer
+		int led_row = 0;
+		for(int i=0; i<2; i++){  // Show Bricks
+			for(int j=0; j<8; j++){
+ 36c:	01 96       	adiw	r24, 0x01	; 1
+ 36e:	88 30       	cpi	r24, 0x08	; 8
+ 370:	91 05       	cpc	r25, r1
+ 372:	79 f7       	brne	.-34     	; 0x352 <main+0x282>
+				if(show_bricks[i*8 + j]){
+					led_row |= (1<<j);
+				}
+			}
+			display[i] = led_row;
+ 374:	5c 83       	std	Y+4, r21	; 0x04
+ 376:	4b 83       	std	Y+3, r20	; 0x03
+			led_row = 0;
+		}
+
+		for (int i = 2; i <= 6; i++) {
+			display[i] = 0; // Clear the middle rows
+ 378:	1e 82       	std	Y+6, r1	; 0x06
+ 37a:	1d 82       	std	Y+5, r1	; 0x05
+ 37c:	18 86       	std	Y+8, r1	; 0x08
+ 37e:	1f 82       	std	Y+7, r1	; 0x07
+ 380:	1a 86       	std	Y+10, r1	; 0x0a
+ 382:	19 86       	std	Y+9, r1	; 0x09
+ 384:	1c 86       	std	Y+12, r1	; 0x0c
+ 386:	1b 86       	std	Y+11, r1	; 0x0b
+ 388:	1e 86       	std	Y+14, r1	; 0x0e
+ 38a:	1d 86       	std	Y+13, r1	; 0x0d
+		}
+
+		display[7] = (0b00011111 << paddle_pos); // Paddle (LSB is the left the of paddle)
+ 38c:	c1 01       	movw	r24, r2
+ 38e:	06 2c       	mov	r0, r6
+ 390:	02 c0       	rjmp	.+4      	; 0x396 <main+0x2c6>
+ 392:	88 0f       	add	r24, r24
+ 394:	99 1f       	adc	r25, r25
+ 396:	0a 94       	dec	r0
+ 398:	e2 f7       	brpl	.-8      	; 0x392 <main+0x2c2>
+ 39a:	98 8b       	std	Y+16, r25	; 0x10
+ 39c:	8f 87       	std	Y+15, r24	; 0x0f
+		
+		if(ball_row <= 7){
+ 39e:	b8 e0       	ldi	r27, 0x08	; 8
+ 3a0:	eb 16       	cp	r14, r27
+ 3a2:	f1 04       	cpc	r15, r1
+ 3a4:	b4 f4       	brge	.+44     	; 0x3d2 <main+0x302>
+			display[ball_row] |= (1 << ball_col); // Ball
+ 3a6:	f7 01       	movw	r30, r14
+ 3a8:	ee 0f       	add	r30, r30
+ 3aa:	ff 1f       	adc	r31, r31
+ 3ac:	21 e0       	ldi	r18, 0x01	; 1
+ 3ae:	30 e0       	ldi	r19, 0x00	; 0
+ 3b0:	2c 0f       	add	r18, r28
+ 3b2:	3d 1f       	adc	r19, r29
+ 3b4:	e2 0f       	add	r30, r18
+ 3b6:	f3 1f       	adc	r31, r19
+ 3b8:	20 81       	ld	r18, Z
+ 3ba:	31 81       	ldd	r19, Z+1	; 0x01
+ 3bc:	c8 01       	movw	r24, r16
+ 3be:	0c 2c       	mov	r0, r12
+ 3c0:	02 c0       	rjmp	.+4      	; 0x3c6 <main+0x2f6>
+ 3c2:	88 0f       	add	r24, r24
+ 3c4:	99 1f       	adc	r25, r25
+ 3c6:	0a 94       	dec	r0
+ 3c8:	e2 f7       	brpl	.-8      	; 0x3c2 <main+0x2f2>
+ 3ca:	82 2b       	or	r24, r18
+ 3cc:	93 2b       	or	r25, r19
+ 3ce:	91 83       	std	Z+1, r25	; 0x01
+ 3d0:	80 83       	st	Z, r24
+		}
+		
+		// Update display
+		update_display(display);
+ 3d2:	ce 01       	movw	r24, r28
+ 3d4:	01 96       	adiw	r24, 0x01	; 1
+ 3d6:	0e 94 4b 00 	call	0x96	; 0x96 <update_display>
+ 3da:	81 ee       	ldi	r24, 0xE1	; 225
+ 3dc:	94 e0       	ldi	r25, 0x04	; 4
+ 3de:	01 97       	sbiw	r24, 0x01	; 1
+ 3e0:	f1 f7       	brne	.-4      	; 0x3de <main+0x30e>
+ 3e2:	00 c0       	rjmp	.+0      	; 0x3e4 <main+0x314>
+ 3e4:	00 00       	nop
+	PORTA |= (1 << LEFT_BUTTON_PIN) | (1 << RIGHT_BUTTON_PIN);
+}
+
+// Function to read button inputs
+unsigned int read_buttons() {
+	return (PINA & ((1 << LEFT_BUTTON_PIN) | (1 << RIGHT_BUTTON_PIN)));
+ 3e6:	89 b3       	in	r24, 0x19	; 25
+	while (1) {
+		// Read button inputs
+		unsigned int buttons = read_buttons();
+		
+		//paddle movement
+		paddle_count ++;
+ 3e8:	9f ef       	ldi	r25, 0xFF	; 255
+ 3ea:	a9 1a       	sub	r10, r25
+ 3ec:	b9 0a       	sbc	r11, r25
+		if(paddle_count >= 15){
+ 3ee:	af e0       	ldi	r26, 0x0F	; 15
+ 3f0:	aa 16       	cp	r10, r26
+ 3f2:	b1 04       	cpc	r11, r1
+ 3f4:	0c f0       	brlt	.+2      	; 0x3f8 <main+0x328>
+ 3f6:	ab ce       	rjmp	.-682    	; 0x14e <main+0x7e>
+ 3f8:	c3 ce       	rjmp	.-634    	; 0x180 <main+0xb0>
+			
+			// Check for collision with walls
+			if (ball_row <= 0 ) {
+				ball_dir_row = -ball_dir_row; // Reflect ball downwards
+			}
+			if (ball_col <= 0 || ball_col >= 7) {
+ 3fa:	c6 01       	movw	r24, r12
+ 3fc:	01 97       	sbiw	r24, 0x01	; 1
+ 3fe:	06 97       	sbiw	r24, 0x06	; 6
+ 400:	08 f0       	brcs	.+2      	; 0x404 <__LOCK_REGION_LENGTH__+0x4>
+ 402:	6c cf       	rjmp	.-296    	; 0x2dc <main+0x20c>
+				ball_row = 6;
+				ball_col = paddle_pos+2;
+			}
+			
+			
+			ball_counter = 0;
+ 404:	81 2c       	mov	r8, r1
+ 406:	91 2c       	mov	r9, r1
+ 408:	85 cf       	rjmp	.-246    	; 0x314 <main+0x244>
+
+0000040a <_exit>:
+ 40a:	f8 94       	cli
+
+0000040c <__stop_program>:
+ 40c:	ff cf       	rjmp	.-2      	; 0x40c <__stop_program>
